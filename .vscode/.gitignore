@@ -1,5 +1,5 @@
-.vscode/*
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
+*
+!settings.json
+!tasks.json
+!launch.json
+!extensions.json
