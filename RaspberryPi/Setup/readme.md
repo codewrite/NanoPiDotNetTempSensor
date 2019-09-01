@@ -25,9 +25,19 @@ This will configure the rPi to have:
    2. tightvnc_setup.sh
    3. accesspoint_setup.sh
 
-### Notea:
+### Notes:
 - APpassword.txt is plaintext (no CR or LF)
 - To create TightVNCpasswd use the following command:
 ````
 vncpasswd TightVNCpasswd
+````
+bridgeSetup.txt will probably contain something like this:
+````
+static ip_address=192.168.1.100/24
+static routers=192.168.1.1
+static domain_name_servers=192.168.1.1
+````
+dhcpRange.txt will contain something like this:
+````
+192.168.1.101,192.168.1.119,255.255.255.0,24h
 ````

@@ -10,12 +10,16 @@ fi
 if ! cat /etc/dhcpcd.conf | grep 'denyinterfaces eth0' >/dev/null; then
   sudo perl -i -0pe 's/$/denyinterfaces eth0\n/s' /etc/dhcpcd.conf
 fi
+if ! cat /etc/dhcpcd.conf | grep 'interface br0' >/dev/null; then
+  # TODO: This doesn't seem to work. Find out why and fix
+  sudo perl -i -0pe 's/$/interface br0\n'$(cat bridgeSetup.txt)'\n/s' /etc/dhcpcd.conf
+fi
 
 sudo brctl addbr br0
 sudo brctl addif br0 eth0
 
 if ! cat /etc/network/interfaces | grep '# Bridge setup' >/dev/null; then
-  sudo perl -i -0pe 's/$/# Bridge setup\nauto br0\niface br0 inet manual\nbridge_ports eth0 wlan0\n/s' /etc/network/interfaces
+  sudo perl -i -0pe 's/$/\n# Bridge setup\nauto br0\niface br0 inet manual\nbridge_ports eth0 wlan0\n/s' /etc/network/interfaces
 fi
 
 perl -i -0pe 's/((^|\n)ssid=).*?($|\n)/\1'$(cat /etc/hostname)'\2/s' hostapd.conf
@@ -32,6 +36,18 @@ sudo iptables -t nat -A  POSTROUTING -o eth0 -j MASQUERADE
 sudo sh -c "iptables-save > /etc/iptables.ipv4.nat"
 if ! cat /etc/rc.local | grep 'iptables-restore' >/dev/null; then
   sudo perl -i -0pe 's/$/iptables-restore < \/etc\/iptables.ipv4.nat\n/s' /etc/rc.local
+fi
+
+if ! test -f /etc/dnsmasq.conf.orig; then
+  sudo mv /etc/dnsmasq.conf /etc/dnsmasq.conf.orig
+fi
+
+if ! cat /etc/dnsmasq.conf | grep 'interface=br0' >/dev/null; then
+  # TODO: Test this and make sure it works in all cases
+  sudo touch /etc/dnsmasq.conf
+  echo "#dhcp config\n" | sudo tee -a /etc/dnsmasq.conf
+  sudo perl -i -0pe 's/$/interface=br0\ndhcp-range='$(cat dhcpRange.txt)'\n/s' /etc/dnsmasq.conf
+  sudo systemctl reload dnsmasq
 fi
 
 #sudo perl -i -pe 's/^.*$/<hostname>/g' /etc/hostname
