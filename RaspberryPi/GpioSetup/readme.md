@@ -14,8 +14,9 @@ The GPIO board provides two switches, two LEDs and a FAN control ouput (0 for of
 
 The following commands are then available in bash:
 
-- ledred <0|1>, e.g. ledred 0
+- ledred <0|1>, e.g. `ledred 0`
 - ledgreen <0|1>
 - fan <0|1>
-- switch<1|2>, e.g. echo $(switch1)
+- switch<1|2>, e.g. `echo $(switch1)`
+- temp will display the CPU temperature (alias for `vcgencmd measure_temp`)
 

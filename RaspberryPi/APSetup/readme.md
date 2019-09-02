@@ -7,7 +7,7 @@ This will configure the rPi to have:
 - Access via:
   - SSH
   - Filezilla
-  - TightVNC
+  - RealVNC
 - Access point functionality
 
 ## Steps
