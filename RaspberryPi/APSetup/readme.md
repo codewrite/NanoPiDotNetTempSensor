@@ -22,15 +22,10 @@ This will configure the rPi to have:
 4. chmod +x .sh files
 5. Run (in this order):
    1. aptget_all.sh
-   2. tightvnc_setup.sh
-   3. accesspoint_setup.sh
+   2. accesspoint_setup.sh
 
 ### Notes:
 - APpassword.txt is plaintext (no CR or LF)
-- To create TightVNCpasswd use the following command:
-````
-vncpasswd TightVNCpasswd
-````
 bridgeSetup.txt will probably contain something like this:
 ````
 static ip_address=192.168.1.100/24

@@ -11,8 +11,8 @@ if ! cat /etc/dhcpcd.conf | grep '\ndenyinterfaces eth0(\n|$)' >/dev/null; then
   sudo perl -i -0pe 's/$/\ndenyinterfaces eth0/s' /etc/dhcpcd.conf
 fi
 if ! cat /etc/dhcpcd.conf | grep 'interface br0' >/dev/null; then
-  # TODO: This doesn't seem to work. Find out why and fix
-  sudo perl -i -0pe 's/$/interface br0\n'$(cat bridgeSetup.txt)'\n/s' /etc/dhcpcd.conf
+  sudo cat bridgeSetup.txt >> /etc/dhcpcd.conf
+  #sudo perl -i -0pe 's/$/\ninterface br0\n'$(cat bridgeSetup.txt)'\n/s' /etc/dhcpcd.conf
 fi
 
 sudo brctl addbr br0
@@ -43,10 +43,9 @@ if ! test -f /etc/dnsmasq.conf.orig; then
 fi
 
 if ! cat /etc/dnsmasq.conf | grep 'interface=br0' >/dev/null; then
-  # TODO: Test this and make sure it works in all cases
   sudo touch /etc/dnsmasq.conf
-  echo "#dhcp config\n" | sudo tee -a /etc/dnsmasq.conf
-  sudo perl -i -0pe 's/$/interface=br0\ndhcp-range='$(cat dhcpRange.txt)'\n/s' /etc/dnsmasq.conf
+  echo "#dhcp config" | sudo tee -a /etc/dnsmasq.conf
+  sudo perl -i -0pe 's/$/\ninterface=br0\ndhcp-range='$(cat dhcpRange.txt)'\n/s' /etc/dnsmasq.conf
   sudo systemctl reload dnsmasq
 fi
 
