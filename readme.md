@@ -7,7 +7,7 @@ connection if the ethernet port is connected to a router which is connected to t
 There are several subfolders describing the individual setup steps:
 
 - [Access Point Setup](RaspberryPi/APSetup/readme.md)
-- [GPIO Board Setup](RaspberryPi/GPIOSetup/readme.md)
+- [GPIO Board Setup](RaspberryPi/GpioSetup/readme.md)
 - [Miscellaneous Setup](RaspberryPi/FunSetup/readme.md)
 
 The GPIO board is an addon board that has two buttons, two LEDs and a Fan control circuit
